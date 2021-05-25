@@ -1,24 +1,22 @@
 <template>
 <div>
-  <Chat user="Lorenzo Rascón M" />
-  <User user="pollo" />
-</div>
+  <img alt="Vue logo" src="./assets/logo.png">
+  <Home/>
+  </div>
 </template>
 
 <script>
-import Chat from './components/chat/Chat.vue'
-import User from './components/chat/User.vue'
+import Home from './components/Home/Home.vue'
 
 export default {
   name: 'App',
   components: {
-    Chat,
-    User
+    Home
   }
 }
 </script>
 
-<style>
+<style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
