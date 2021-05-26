@@ -1,24 +1,30 @@
 <template>
-  <div class="Home" id="Home">
-    <div class="container">
-      <div class="notification is-primary">
-        <div class="field">
-          <label class="label">Nombre del usuario</label>
-          <div class="control">
-            <input
-              class="input"
-              type="text"
-              placeholder="Text input"
-              v-model="user"
-            />
-          </div>
-        </div>
+  <div>
+    <div v-if="login">
+      <Summary />
+    </div>
 
-        <div class="field is-grouped">
-          <div class="control">
-            <button class="button is-link" v-on:click="Submit(user, $event)">
-              Entrar
-            </button>
+    <div v-else class="Home" id="Home">
+      <div class="container">
+        <div class="notification is-info">
+          <div class="field">
+            <label class="label">Nombre del usuario</label>
+            <div class="control">
+              <input
+                class="input"
+                type="text"
+                placeholder="Escriba un nombre de usuario"
+                v-model="user"
+              />
+            </div>
+          </div>
+
+          <div class="field is-grouped">
+            <div class="control">
+              <button class="button is-link" v-on:click="Submit(user, $event)">
+                Entrar
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -28,44 +34,44 @@
 
 <script>
 import ChatService from "../../services/ChatService";
+import Summary from "../Chat/Summary";
 
 export default {
   name: "Home",
 
-  props: {
+  created() {
+    console.log("Component has been created!");
   },
 
-  data() {
+  components: {
+    Summary,
+  },
+
+  props: {},
+
+  data: function() {
     return {
       user: "",
+      login: false,
     };
   },
 
   methods: {
-    Submit: (user, event) => {
+    Submit(user, event) {
       event.preventDefault();
+      console.log(this.user);
+
       if (user.length === 0) {
         console.error("usuario vacio");
       } else {
-        console.info("todo bien");
-
         ChatService.postUser({ user: user })
           .then((response) => {
             console.log(response);
+            this.login = response.data.id !== null ? true : false;
           })
           .catch((error) => {
             console.log(error);
           });
-
-        /*
-            ChatService.get()
-            .then( (response)=> {
-                console.log(response)
-            })
-            .catch( (error)=> {
-                console.log(error)
-            })
-            */
       }
     },
   },
