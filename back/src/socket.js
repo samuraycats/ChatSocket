@@ -1,18 +1,19 @@
-const { Socket } = require('socket.io');
+module.exports = (http) => {
+    const io = require('socket.io')(http, {
+        cors: {
+            origin: "http://localhost:8080",
+            methods: ["GET", "POST", "PUT", "DELETE"]
+        }
+    });
 
-module.exports= (http) => {
-    const io =require('socket.io')(http);
-    console.log('user connected');
+    let messages = [];
 
     io.on('connection', (socket) => {
-
-        socket.on("chat-message", (msg)=> {
-            io.emit('chat-message', msg);
+        socket.on("new-message", function (data) {
+            messages.push(data);
+            io.emit("messages", messages);
         });
 
-        socket.on("disconnect", (msg)=> {
-            io.emit('User disconnect', msg);
-        });
-
+        socket.emit('messages', messages);
     });
 }
