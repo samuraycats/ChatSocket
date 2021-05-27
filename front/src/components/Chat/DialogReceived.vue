@@ -22,8 +22,8 @@ export default {
 
   mounted: function() {
     let scroll = document.querySelector(".scroll");
+    
     if (scroll !== null) {
-      console.log(scroll);
       scroll.scrollTop = scroll.scrollHeight;
     }
   },

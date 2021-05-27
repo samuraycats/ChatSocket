@@ -37,12 +37,10 @@ export default {
       let messagesNew = data;
 
       if (messagesOld.length !== messagesNew.length) {
-        console.log("cambios");
         this.$store.state.messages = data;
         this.$store.dispatch("addMessagesAction");
-      } else {
-        console.log("sin cambios");
       }
+
     });
   },
 
