@@ -3,12 +3,12 @@
     <article class="media">
       <div class="media-left">
         <figure class="image is-32x32">
-            <i class="fa fa-comment-o" style="font-size:20px;#257942"></i>
+          <i class="fa fa-comment-o" style="font-size:20px;#257942"></i>
         </figure>
       </div>
       <div>
         <div class="text">
-            Itaque, hic culpa exercitationem 
+          {{ mesageRead.message }}
         </div>
       </div>
     </article>
@@ -16,23 +16,27 @@
 </template>
 
 <script>
-
 export default {
   name: "DialogReceived",
+  props: { mesageRead: Object },
 
-  props: ['float'],
-
-
+  mounted: function() {
+    let scroll = document.querySelector(".scroll");
+    if (scroll !== null) {
+      console.log(scroll);
+      scroll.scrollTop = scroll.scrollHeight;
+    }
+  },
 };
 </script>
 
 <style scoped>
-.received{
-    width: 75%;
-    float:left
+.received {
+  width: 75%;
+  float: left;
 }
 
-.text{
-    text-align: justify;
+.text {
+  text-align: justify;
 }
 </style>

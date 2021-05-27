@@ -17,7 +17,6 @@ let whiteList = [{url:process.env.FRONT_ENDPOINT, status:true}];
 const corsOptions = {
   origin: (origin, callback) => {
     if (whiteList.some( e => e.url === origin && e.status === true )) {
-      console.log("ok");
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'))
@@ -38,14 +37,12 @@ app.get("/prueba", cors(corsOptions), (req, resp, next) => {
 });
 
 app.post("/user", cors(corsOptions), (req, resp, next) => {
-  let response = {id:null, user:null };
+  let response = {id:null, user:null, status:true };
 
   const con = mysql.createConnection(dataConexion);
   con.connect();
 
   con.query('SELECT * FROM user where user = ?', [req.body.user], (error, rows) => {
-    
-    console.log(rows.length);
     if (rows.length === 0 ) {      
       con.query('INSERT INTO user SET ?', {user: req.body.user}, (error, results, fields) => {
         response.id = results.insertId;

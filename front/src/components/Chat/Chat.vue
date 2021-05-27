@@ -1,49 +1,43 @@
 <template>
   <div class="box scroll">
-    <DialogSend float="type-l" />
-    <DialogReceived float="type-r" />
+    <Dialog
+      :message="message"
+      v-for="(message, index) in messages"
+      :key="index"
+    />
   </div>
 </template>
 
 <script>
-import ChatService from "../../services/ChatService";
-import DialogSend from "../Chat/DialogSend";
-import DialogReceived from "../Chat/DialogReceived";
+import Dialog from "../Chat/Dialog";
 
 export default {
   name: "Chat",
 
-  components: {
-    DialogSend,
-    DialogReceived,
-  },
-
-  props: {},
+  components: { Dialog },
 
   data: function () {
     return {
-      user: "",
-      login: false,
+      messages: [],
     };
   },
 
-  methods: {
-    Submit(user, event) {
-      event.preventDefault();
-      console.log(this.user);
+  computed: {
+    testMessages() {
+      return this.$store.getters.getMessages;
+    },
+  },
 
-      if (user.length === 0) {
-        console.error("usuario vacio");
-      } else {
-        ChatService.postUser({ user: user })
-          .then((response) => {
-            console.log(response);
-            this.login = response.data.id !== null ? true : false;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
+  watch: {
+    testMessages: {
+      immediate: true,
+      deep: false,
+
+      handler(newMessages, oldMessages) {
+        if (newMessages !== oldMessages) {
+          this.messages = JSON.parse(newMessages);
+        }
+      },
     },
   },
 };
