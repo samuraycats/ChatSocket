@@ -4,20 +4,25 @@ export const store = createStore({
     state() {
         return {
             msg: "vuex desde cero",
-            account: { id: "", user: "temporal", status: false },
+            account:  { id: null, user: "", date: null, socket: null, status: false },
 
             message: "",
             messages: [{ id: "", user: "temporal", status: false }],
+
+            userTalk: { id: null, user: "", date: null, socket: null, status: false },
         }
     },
     mutations: {
+        selectedUserTalk (state){
+            state.userTalk = this.state.userTalk;
+        },
+
         addMessages(state){
             state.messages = this.state.messages;
         },
 
         addMessage(state) {
             state.message = this.state.message;
-            //state.mensajes = [state.mensaje, ...state.mensajes]
         },
 
         saveAccount(state) {
@@ -26,6 +31,10 @@ export const store = createStore({
 
     },
     actions: {
+        selectedUserTalkAction(context){
+            context.commit('selectedUserTalk');
+        },
+
         addMessagesAction(context){
             context.commit('addMessages');
         },
@@ -43,6 +52,11 @@ export const store = createStore({
             return state.msg;
         },
 
+        // ================= account section =================
+        getAccount(state){
+            return state.account;
+        },
+
         getUserName(state) {
             return state.account.user;
         },
@@ -54,13 +68,21 @@ export const store = createStore({
         getUserState(state){
             return state.account.state
         },
-        // ================= messagesection =================
+        // ================= message section =================
         getMessage(state){
             return state.message
         },
 
         getMessages(state){
             return JSON.stringify(state.messages);
+        },
+        // ================  account talk section ================
+        getUserTalk(state){
+            return  state.userTalk;
+        },
+
+        getUserTalkUserName(state){
+            return  state.userTalk.user;
         }
     }
 });

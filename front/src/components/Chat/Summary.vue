@@ -1,6 +1,23 @@
 <template>
   <div class="container">
     <div class="box">
+      <article class="panel is-success">
+        <div class="columns">
+          <div class="column is-6">
+            <p class="panel-heading">
+              Conectado como {{ this.$store.getters.getUserName }}
+            </p>
+          </div>
+          <div class="column is-6">
+            <p class="panel-heading">
+              Conversando con {{ this.$store.getters.getUserTalkUserName }}
+            </p>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="box">
       <div class="columns">
         <div class="column is-4">
           <Users />
@@ -40,7 +57,6 @@ export default {
         this.$store.state.messages = data;
         this.$store.dispatch("addMessagesAction");
       }
-
     });
   },
 
