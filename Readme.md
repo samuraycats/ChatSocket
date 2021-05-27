@@ -4,7 +4,7 @@
 3) yarn serve
 
 ### ejecutar la aplicacion de back end
-1) cd front
+1) cd back
 2) yarn install
 3) yarn start:dev
 
