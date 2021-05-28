@@ -38,6 +38,8 @@ import Users from "../Chat/Users";
 import Chat from "../Chat/Chat";
 import Message from "../Chat/Message";
 
+import ChatService from "./../../services/ChatService";
+
 export default {
   name: "Summary",
 
@@ -49,14 +51,7 @@ export default {
 
   mounted() {
     this.socket.on("messages", (data) => {
-      let messagesOld = JSON.parse(this.$store.getters.getMessages);
-      let messagesNew = data;
-
-      if (messagesOld.length !== messagesNew.length) {
-        
-        this.$store.state.messages = messagesNew;
-        this.$store.dispatch("addMessagesAction");
-      }
+      ChatService.getMessages(data, this.$store);
     });
   },
 
@@ -73,15 +68,7 @@ export default {
 
       handler(newValue, oldValue) {
         if (newValue !== oldValue) {
-          let payload = {
-            from: this.$store.getters.getUserId,
-            user: this.$store.getters.getUserName,
-            message: newValue,
-            to: this.$store.getters.getUserTalkId,
-            date: new Date()
-          };
-
-          this.socket.emit("new-message", payload);
+          ChatService.sendMessage(newValue, this.$store,  this.socket);
         }
       },
     },

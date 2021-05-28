@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import { USER_GENERAL } from '../src/constants/models';
 
 export const store = createStore({
     state() {
@@ -7,9 +8,9 @@ export const store = createStore({
             account:  { id: null, user: "", date: null, socket: null, status: false },
 
             message: "",
-            messages: [{ id: "", user: "temporal", status: false }],
+            messages: [{ id: "", user: "Temporal", status: false }],
 
-            userTalk: { id: null, user: "", date: null, socket: null, status: false },
+            userTalk: USER_GENERAL,
         }
     },
     mutations: {
