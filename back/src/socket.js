@@ -39,8 +39,8 @@ module.exports = (http) => {
         });
 
         socket.on("new-message", function (data) {
-           data.message !== "" &&  messages.push(data);
-            io.emit("messages", messages);
+            data.message !== "" &&  messages.push(data);
+            io.emit('messages', messages);
         });
 
         socket.on('disconnect', function () {

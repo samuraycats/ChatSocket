@@ -62,7 +62,7 @@ export default {
       users: [],
       user: "",
       login: false,
-      socket: io("http://localhost:3000"),
+      socket: io(process.env.VUE_APP_BACK_END_POINT),
     };
   },
 

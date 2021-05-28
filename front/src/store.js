@@ -83,6 +83,14 @@ export const store = createStore({
 
         getUserTalkUserName(state){
             return  state.userTalk.user;
+        },
+
+        getUserTalkSocket(state){
+            return  state.userTalk.socket;
+        },
+
+        getUserTalkId(state){
+            return  state.userTalk.id;
         }
     }
 });

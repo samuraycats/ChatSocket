@@ -19,14 +19,7 @@ export default {
 </script>
 
 <style scoped>
-.received {
-  width: 75%;
-  float: left;
-}
 
-.text {
-  text-align: justify;
-}
 </style>
 
 

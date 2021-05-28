@@ -41,7 +41,7 @@ export default {
       account: {},
       login: false,
       totalUser: 0,
-      socket: io("http://localhost:3000"),
+      socket: io(process.env.VUE_APP_BACK_END_POINT),
     };
   },
 
@@ -53,7 +53,7 @@ export default {
         this.$store.state.userTalk = userTalk;
         this.$store.dispatch("selectedUserTalkAction");
       }
-      
+
     },
   },
 

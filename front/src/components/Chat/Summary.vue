@@ -34,7 +34,6 @@
 
 <script>
 import io from "socket.io-client";
-
 import Users from "../Chat/Users";
 import Chat from "../Chat/Chat";
 import Message from "../Chat/Message";
@@ -45,7 +44,7 @@ export default {
   components: { Users, Chat, Message },
 
   data: function() {
-    return { message: "", socket: io("http://localhost:3000") };
+    return { message: "", socket: io(process.env.VUE_APP_BACK_END_POINT) };
   },
 
   mounted() {
@@ -54,7 +53,8 @@ export default {
       let messagesNew = data;
 
       if (messagesOld.length !== messagesNew.length) {
-        this.$store.state.messages = data;
+        
+        this.$store.state.messages = messagesNew;
         this.$store.dispatch("addMessagesAction");
       }
     });
@@ -74,9 +74,11 @@ export default {
       handler(newValue, oldValue) {
         if (newValue !== oldValue) {
           let payload = {
-            id: this.$store.getters.getUserId,
+            from: this.$store.getters.getUserId,
             user: this.$store.getters.getUserName,
             message: newValue,
+            to: this.$store.getters.getUserTalkId,
+            date: new Date()
           };
 
           this.socket.emit("new-message", payload);
