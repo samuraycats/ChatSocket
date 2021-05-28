@@ -10,7 +10,7 @@
         </span>
       </p>
     </div>
-    <a class="panel-block is-active">
+    <a class="panel-block is-active" v-on:click="selectUser(0)" >
       <span class="panel-icon">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
       </span>
@@ -33,8 +33,9 @@
 
 <script>
 import io from "socket.io-client";
-
+import { USER_GENERAL } from '../../constants/models';
 export default {
+  
   data: function() {
     return {
       users: [],
@@ -47,7 +48,7 @@ export default {
 
   methods: {
     selectUser(id) {
-      let userTalk = this.users.find((e) => e.id === id);
+      let userTalk = id === 0 ? USER_GENERAL : this.users.find((e) => e.id === id);
 
       if (userTalk) {
         this.$store.state.userTalk = userTalk;

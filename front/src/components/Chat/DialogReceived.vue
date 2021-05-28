@@ -1,9 +1,16 @@
 <template>
   <div class="notification is-success is-light received">
-    <div class="time">
-      <time>{{ date }}</time>
-    </div>
-    <br />
+ 
+      <div class="columns is-desktop bar-top">
+        <div class="column is-half">
+          <span>{{ mesageRead.user }}</span>
+        </div>
+        <div class="column is-half">
+          <time>{{ date }}</time>
+        </div>
+      </div>
+    
+
     <article class="media">
       <div class="media-left">
         <figure class="image is-32x32">
@@ -29,7 +36,7 @@ export default {
   data() {
     return { date: moment(this.mesageRead.date).format(`DD/MM/YYYY HH:mm:ss`) };
   },
-  mounted: function () {
+  mounted: function() {
     let scroll = document.querySelector(".scroll");
 
     if (scroll !== null) {
@@ -39,7 +46,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss">
+$color: black;
+
 .received {
   width: 75%;
   float: left;
@@ -49,13 +58,17 @@ export default {
   text-align: justify;
 }
 
-.time {
-  width: 100%;
+.bar-top div span{
+text-align:left ;
+color:$color;
+font-weight: bold;
+margin-left: -100px;
+text-transform: capitalize;
 }
 
 time {
   font-size: 0.8rem;
-  color: rgb(7, 7, 7);
+  color: $color;
   margin-top: 3px;
   float: right;
   cursor: default;
