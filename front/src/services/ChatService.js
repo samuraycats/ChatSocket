@@ -1,14 +1,13 @@
 import axios from 'axios';
 
-const API_BASE_URL = "http://localhost:3000/";
 
 const ChatService = {
     get: () => {
-        return axios.get(`${API_BASE_URL}prueba`);
+        return axios.get(`${process.env.VUE_APP_BACK_END_POINT}prueba`);
     },
 
     postUser: (user) => {
-        return axios.post(`${API_BASE_URL}user`, user);
+        return axios.post(`${process.env.VUE_APP_BACK_END_POINT}user`, user);
     }
 }
 
