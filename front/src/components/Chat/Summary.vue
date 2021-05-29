@@ -1,20 +1,7 @@
 <template>
   <div class="container">
     <div class="box">
-      <article class="panel is-success">
-        <div class="columns">
-          <div class="column is-6">
-            <p class="panel-heading">
-              Conectado como {{ this.$store.getters.getUserName }}
-            </p>
-          </div>
-          <div class="column is-6">
-            <p class="panel-heading">
-              Conversando con {{ this.$store.getters.getUserTalkUserName }}
-            </p>
-          </div>
-        </div>
-      </article>
+      <BarTop />
     </div>
 
     <div class="box">
@@ -37,21 +24,25 @@ import io from "socket.io-client";
 import Users from "../Chat/Users";
 import Chat from "../Chat/Chat";
 import Message from "../Chat/Message";
+import BarTop from "../Chat/BarTop";
 
-import ChatService from "./../../services/ChatService";
+
+import MessagesService from '../../services/MessagesService'
+import UserService from "../../services/UserService";
 
 export default {
   name: "Summary",
 
-  components: { Users, Chat, Message },
+  components: { Users, Chat, Message, BarTop },
 
-  data: function() {
+  data: function () {
     return { message: "", socket: io(process.env.VUE_APP_BACK_END_POINT) };
   },
 
   mounted() {
-    this.socket.on("messages", (data) => {
-      ChatService.getMessages(data, this.$store);
+    this.socket.on("messages", (messagesNew) => {
+      MessagesService.setMessages(messagesNew, JSON.parse(this.$store.getters.getMessages), this.$store);
+      UserService.countMessages(JSON.parse(this.$store.getters.getMessages), this.$store);
     });
   },
 
@@ -68,7 +59,7 @@ export default {
 
       handler(newValue, oldValue) {
         if (newValue !== oldValue) {
-          ChatService.sendMessage(newValue, this.$store,  this.socket);
+          MessagesService.sendMessage(newValue, this.$store, this.socket);
         }
       },
     },
@@ -76,4 +67,5 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>
