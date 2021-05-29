@@ -4,22 +4,24 @@ import { USER_GENERAL } from '../src/constants/models';
 export const store = createStore({
     state() {
         return {
-            msg: "vuex desde cero",
-            account:  { id: null, user: "", date: null, socket: null, status: false },
-
+            account: USER_GENERAL,
             message: "",
-            messages: [{ id: "", user: "Temporal", status: false }],
-
+            messages: [],
             userTalk: USER_GENERAL,
+            users:[]
         }
     },
     mutations: {
-        selectedUserTalk (state){
+        addUsers(state){
+            state.users = this.state.users;
+        },
+
+        selectedUserTalk(state) {
             state.userTalk = this.state.userTalk;
         },
 
-        addMessages(state){
-            state.messages = this.state.messages;
+        addMessages(state) {
+            state.messages = this.state.messages.sort((a, b) => a.date > b.date);
         },
 
         addMessage(state) {
@@ -32,11 +34,15 @@ export const store = createStore({
 
     },
     actions: {
-        selectedUserTalkAction(context){
+        addUsersAction(context){
+            context.commit('addUsers');
+        },
+
+        selectedUserTalkAction(context) {
             context.commit('selectedUserTalk');
         },
 
-        addMessagesAction(context){
+        addMessagesAction(context) {
             context.commit('addMessages');
         },
 
@@ -44,17 +50,22 @@ export const store = createStore({
             context.commit('saveAccount');
         },
 
-        addMessageAction(context){
+        addMessageAction(context) {
             context.commit('addMessage');
         }
     },
     getters: {
-        mensaje(state) {
-            return state.msg;
+        // ================= Users =================
+        getUsers(state){
+            return state.users;
+        },
+
+        getUsersMessages(state){
+            return state.users.messages;
         },
 
         // ================= account section =================
-        getAccount(state){
+        getAccount(state) {
             return state.account;
         },
 
@@ -66,32 +77,32 @@ export const store = createStore({
             return state.account.id;
         },
 
-        getUserState(state){
+        getUserState(state) {
             return state.account.state
         },
         // ================= message section =================
-        getMessage(state){
+        getMessage(state) {
             return state.message
         },
 
-        getMessages(state){
+        getMessages(state) {
             return JSON.stringify(state.messages);
         },
         // ================  account talk section ================
-        getUserTalk(state){
-            return  state.userTalk;
+        getUserTalk(state) {
+            return state.userTalk;
         },
 
-        getUserTalkUserName(state){
-            return  state.userTalk.user;
+        getUserTalkUserName(state) {
+            return state.userTalk.user;
         },
 
-        getUserTalkSocket(state){
-            return  state.userTalk.socket;
+        getUserTalkSocket(state) {
+            return state.userTalk.socket;
         },
 
-        getUserTalkId(state){
-            return  state.userTalk.id;
+        getUserTalkId(state) {
+            return state.userTalk.id;
         }
     }
 });

@@ -23,7 +23,7 @@ module.exports = (http) => {
             const con = mysql.createConnection(dataBaseConexion)
             con.connect();
 
-            let user = { id: null, user: data.user, date: new Date(), socket: socket.id, status: true, };
+            let user = { id: null, user: data.user, date: new Date(), socket: socket.id, status: true, messages: 0 };
 
             con.query('INSERT INTO user SET ?', { user: user.user, date: user.date, socket: socket.id, status: true }, (error, results, fields) => {
                 if (error) throw err;

@@ -1,1 +1,1 @@
-export const USER_GENERAL = { id: 0, user: "General", date: null, socket: null, status: false };
+export const USER_GENERAL = { id: 0, user: "General", date: null, socket: null, status: false, messages:0 };
