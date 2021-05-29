@@ -19,7 +19,6 @@ module.exports = (http) => {
     io.on('connection', (socket) => {
 
         socket.on("new-user", (data) => {
-            // ===========================================================================
             const con = mysql.createConnection(dataBaseConexion)
             con.connect();
 
@@ -33,14 +32,23 @@ module.exports = (http) => {
                 users.push(user);
                 io.emit("users", users)
             });
-            // ===========================================================================
-
-
         });
 
         socket.on("new-message", function (data) {
-            data.message !== "" &&  messages.push(data);
-            io.emit('messages', messages);
+            const con = mysql.createConnection(dataBaseConexion)
+            con.connect();
+            let newMessage = {id: data.id, from:data.from, message:data.message, to:data.to, date:data.date}
+        
+            if (newMessage.message !== ""){
+                con.query('INSERT INTO message SET ?', newMessage, (error, results, fields) => {
+                    if (error) throw err;
+                    data.id = results.insertId;
+                    con.end();
+    
+                    messages.push(data);
+                    io.emit('messages', messages);
+                });
+            } 
         });
 
         socket.on('disconnect', function () {

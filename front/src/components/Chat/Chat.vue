@@ -3,7 +3,7 @@
     <Dialog
       :message="message"
       v-for="message in messages"
-      :key="message.message"
+      :key="message.id"
     />
   </div>
 </template>
