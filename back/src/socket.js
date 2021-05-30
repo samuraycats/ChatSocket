@@ -4,7 +4,7 @@ const mysql = require('mysql');
 module.exports = (http) => {
     const io = require('socket.io')(http, {
         cors: {
-            origin: process.env.FRONT_ENDPOINT,
+            origin: process.env.FRONT_CHAT,
             methods: ["GET", "POST", "PUT", "DELETE"]
         }
     });
@@ -41,7 +41,6 @@ module.exports = (http) => {
         
             if (newMessage.message !== ""){
                 con.query('INSERT INTO message SET ?', newMessage, (error, results, fields) => {
-                    if (error) throw err;
                     data.id = results.insertId;
                     con.end();
     
