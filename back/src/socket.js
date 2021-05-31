@@ -38,7 +38,8 @@ module.exports = (http) => {
             userService.post(user)
                 .then((response) => {
                     if (response.data.id > 0) {
-                        users.push(response.data);
+                        user.id = response.data.id
+                        users.push(user);
                     }
                 })
                 .catch((error) => {
@@ -51,23 +52,31 @@ module.exports = (http) => {
 
         socket.on("new-message", (data) => {
 
-            let newMessage = { id: null, from: data.from, message: data.message, to: data.to, date: data.date }
+            let user = users.find(e => e.id === data.from);
 
-            if (newMessage.message !== "") {
-                const messageService = new MessageService();
+            if (typeof (user) !== "undefined") {
 
-                messageService.post(newMessage)
-                    .then((response) => {
-                        if (response.data.id > 0) {
-                            messages.push(response.data);
-                        }
-                    })
-                    .catch(() => {
-                        console.log("Falló al insertar en mensaje ")
-                    })
-                    .finally(() => {
-                        io.emit('messages', messages);
-                    })
+                let newMessage = { id: null, from: data.from, message: data.message, to: data.to, date: data.date }
+
+                if (newMessage.message !== "") {
+                    const messageService = new MessageService();
+
+                    messageService.post(newMessage)
+                        .then((response) => {
+                            if (response.data.id > 0) {
+                                newMessage.user = user.user;
+                                newMessage.id = response.data.id
+                                messages.push(newMessage);
+                            }
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                            console.log("Falló al insertar en mensaje ")
+                        })
+                        .finally(() => {
+                            io.emit('messages', messages);
+                        })
+                }
             }
         });
 

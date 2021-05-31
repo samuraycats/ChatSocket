@@ -108,9 +108,6 @@ app.put('/api/message/:id', cors(corsOptions), (req, resp) => {
       resp.send({ error: "No se encontró el registro" });
     }
   });
-
-
-
 });
 
 app.delete('/api/message/:id', cors(corsOptions), (req, resp) => {
