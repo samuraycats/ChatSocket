@@ -4,7 +4,7 @@
 ### Configuraciones:
 En el archivo .env se encuentran las variables de entorno para el funcionamiento de la aplicación.
 
-Back: (back/.env)
+#### Back: (back/.env)
 FRONT_ENDPOINT= variable para especificar los origines separados por [,] ejemplo (FRONT_ENDPOINT=http://localhost:8080,http://localhost:3000)
 
 FRONT_CHAT= variable de entorno para el front ejemplo:( http://localhost:8080)
@@ -18,7 +18,7 @@ DB_USER= variable de entorno para el usuario de la base de datos (root)
 DB_PASSWORD= variable de entorno para la contraseña de la base de datos ejemplo (1234567)
 DB_DATABASE= variable de entorno para la base de datos por defecto es (chat)
 
-front: (front/.env)
+#### Front: (front/.env)
 NODE_PATH= variable de entorno para raíz del proyecto (src)
 VUE_APP_BACK_END_POINT= variable de entorno para el endpoint del back (http://localhost:3000)
 
@@ -31,7 +31,7 @@ $ yarn install
 $ yarn serve
 ```
 
-### ejecutar la aplicación de back end
+### Ejecutar la aplicación de back end
 ```sh
 $ cd back
 $ yarn install
