@@ -89,7 +89,6 @@ export default {
   mounted() {
     this.socket.on("users", (data) => {
       this.users = data;
-
       let userOk = data.find((e) => e.user === this.user);
 
       if (userOk) {

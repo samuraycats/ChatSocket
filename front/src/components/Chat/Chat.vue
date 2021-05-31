@@ -1,10 +1,6 @@
 <template>
   <div class="box scroll">
-    <Dialog
-      :message="message"
-      v-for="message in messages"
-      :key="message.id"
-    />
+    <Dialog :message="message" v-for="message in messages" :key="message.id" />
   </div>
 </template>
 
