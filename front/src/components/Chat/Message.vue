@@ -1,10 +1,10 @@
 <template>
-  <div class="box">
+  <div class="box message">
     <input
       class="input is-medium is-success"
       @keyup.enter="submitMessage()"
       type="text"
-      placeholder="Medium input"
+      placeholder="Escribe un mensaje y presiona Enter para enviar"
       v-model="message"
     />
   </div>
@@ -29,4 +29,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.message {
+  background-color: lightblue;
+}
+</style>

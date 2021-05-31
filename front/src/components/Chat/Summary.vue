@@ -1,6 +1,10 @@
 <template>
   <div class="container">
     <div class="box">
+      <BarTop />
+    </div>
+
+    <div class="box">
       <div class="columns">
         <div class="column is-4">
           <Users />
@@ -17,30 +21,28 @@
 
 <script>
 import io from "socket.io-client";
-
 import Users from "../Chat/Users";
 import Chat from "../Chat/Chat";
 import Message from "../Chat/Message";
+import BarTop from "../Chat/BarTop";
+
+
+import MessagesService from '../../services/MessagesService'
+import UserService from "../../services/UserService";
 
 export default {
   name: "Summary",
 
-  components: { Users, Chat, Message },
+  components: { Users, Chat, Message, BarTop },
 
-  data: function() {
-    return { message: "", socket: io("http://localhost:3000") };
+  data: function () {
+    return { message: "", socket: io(process.env.VUE_APP_BACK_END_POINT) };
   },
 
   mounted() {
-    this.socket.on("messages", (data) => {
-      let messagesOld = JSON.parse(this.$store.getters.getMessages);
-      let messagesNew = data;
-
-      if (messagesOld.length !== messagesNew.length) {
-        this.$store.state.messages = data;
-        this.$store.dispatch("addMessagesAction");
-      }
-
+    this.socket.on("messages", (messagesNew) => {
+      MessagesService.setMessages(messagesNew, JSON.parse(this.$store.getters.getMessages), this.$store);
+      UserService.countMessages(JSON.parse(this.$store.getters.getMessages), this.$store);
     });
   },
 
@@ -57,13 +59,7 @@ export default {
 
       handler(newValue, oldValue) {
         if (newValue !== oldValue) {
-          let payload = {
-            id: this.$store.getters.getUserId,
-            user: this.$store.getters.getUserName,
-            message: newValue,
-          };
-
-          this.socket.emit("new-message", payload);
+          MessagesService.sendMessage(newValue, this.$store, this.socket);
         }
       },
     },
@@ -71,4 +67,5 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>
